@@ -1,11 +1,9 @@
-Here’s a **professional and clear `README.md`** you can use for your `vat_portal_backend_nic` backend project:
 
----
 
 ```markdown
 # 🚀 VAT Portal Backend (NIC)
 
-This is the backend system for the **VAT Management Portal** built using **Spring Boot** and **PostgreSQL**, secured with **JWT Authentication**. This service is intended to support user registration, login, and role-based authorization.
+This is the backend for the **VAT Management Portal**, built with **Spring Boot**, **PostgreSQL**, and secured using **JWT Authentication**. It supports user registration, login, and role-based authorization.
 
 ---
 
@@ -13,51 +11,34 @@ This is the backend system for the **VAT Management Portal** built using **Sprin
 
 - ✅ User Registration (`/register`)
 - 🔐 JWT-based Login (`/login`)
-- 👤 Role-based access (ADMIN / APPROVER / USER)
-- 📦 PostgreSQL database integration
-- 🌐 RESTful API built with Spring Boot
-- 🐘 Hosted PostgreSQL on Render
-- 📄 Swagger-ready (optional enhancement)
+- 👤 Role-based Access: `ADMIN`, `APPROVER`, `USER`
+- 🐘 PostgreSQL Database Integration (Hosted on Render)
+- 🧰 RESTful APIs with Spring Boot
+- 🐳 Dockerized Deployment
+- 📄 (Optional) Swagger Documentation
 
 ---
 
 ## ⚙️ Tech Stack
 
-| Layer           | Technology               |
-|----------------|---------------------------|
-| Backend         | Spring Boot (Java 17)     |
-| Authentication  | Spring Security + JWT     |
-| Database        | PostgreSQL                |
-| Build Tool      | Maven                     |
-| Deployment      | Docker + Render           |
+| Layer         | Technology               |
+|---------------|---------------------------|
+| Backend       | Spring Boot (Java 17)     |
+| Auth & Sec    | Spring Security + JWT     |
+| Database      | PostgreSQL (Render Cloud) |
+| Build Tool    | Maven                     |
+| Deployment    | Docker + Render           |
 
 ---
 
-## 📂 Project Structure
-
-```
-
-vat\_portal\_backend\_nic/
-├── src/
-├── Dockerfile
-├── mvnw / mvnw\.cmd
-├── pom.xml
-└── application.properties
-
-````
-
----
 
 ## 🔐 API Endpoints
 
-### 📝 Register
+### 1️⃣ Register
 
-```http
-POST /register
-````
+**URL:** `POST /register`
 
-#### Sample JSON Body:
-
+#### ✅ Sample Request:
 ```json
 {
   "username": "Kamalesh Chakraborty",
@@ -65,17 +46,15 @@ POST /register
   "role": "APPROVER",
   "designation": "Manager"
 }
-```
+````
 
 ---
 
-### 🔓 Login
+### 2️⃣ Login
 
-```http
-POST /login
-```
+**URL:** `POST /login`
 
-#### Sample JSON Body:
+#### ✅ Sample Request:
 
 ```json
 {
@@ -84,61 +63,70 @@ POST /login
 }
 ```
 
-* ✔️ Returns a **JWT Token** on success.
-* The token should be used in the `Authorization` header as:
+#### 🔐 Response:
 
-  ```
-  Authorization: Bearer <JWT_TOKEN>
-  ```
+```json
+{
+  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+}
+```
 
----
+✅ Use this JWT token in the `Authorization` header for protected APIs:
 
-## 🌐 Deployment
-
-> ✅ Deployed on [Render](https://render.com/)
-
-**Production URL:**
-[https://sign-up-page-h05w.onrender.com](https://sign-up-page-h05w.onrender.com)
+```
+Authorization: Bearer <JWT_TOKEN>
+```
 
 ---
 
-## 🔧 Setup (Local)
+## 🌍 Deployment
 
-1. **Clone the repository**
+✅ Live API: [https://sign-up-page-h05w.onrender.com](https://sign-up-page-h05w.onrender.com)
 
-   ```bash
-   git clone https://github.com/GaneshRehan/vat_portal_backend_nic.git
-   ```
+---
 
-2. **Update `application.properties`** with your DB credentials.
+## 🧪 Local Setup
 
-3. **Build the project**
+### 1. Clone the repo
 
-   ```bash
-   ./mvnw clean install
-   ```
+```bash
+git clone https://github.com/GaneshRehan/vat_portal_backend_nic.git
+cd vat_portal_backend_nic
+```
 
-4. **Run the app**
+### 2. Update DB credentials in `src/main/resources/application.properties`
 
-   ```bash
-   java -jar target/*.jar
-   ```
+### 3. Build and run
+
+```bash
+./mvnw clean install
+java -jar target/*.jar
+```
 
 ---
 
 ## 🐳 Docker Deployment
 
-1. **Build Docker image**
+### 1. Build the image
 
-   ```bash
-   docker build -t vat-portal-backend .
-   ```
+```bash
+docker build -t vat-portal-backend .
+```
 
-2. **Run the container**
+### 2. Run the container
 
-   ```bash
-   docker run -p 8083:8083 vat-portal-backend
-   ```
+```bash
+docker run -p 8083:8083 vat-portal-backend
+```
 
 ---
+
+## 🔐 Environment Variables (Render)
+
+| Key                          | Value                                  |
+| ---------------------------- | -------------------------------------- |
+| `SPRING_DATASOURCE_URL`      | jdbc\:postgresql://... (Render DB URL) |
+| `SPRING_DATASOURCE_USERNAME` | e.g. `kamalesh1_user`                  |
+| `SPRING_DATASOURCE_PASSWORD` | Your DB password                       |
+
 
