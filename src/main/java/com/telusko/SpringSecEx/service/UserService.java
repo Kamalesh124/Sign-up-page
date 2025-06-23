@@ -31,15 +31,28 @@ public class UserService {
         //however for postman if we use normal password it will show not authorized, as in security configure there was noPasswordEncoder. So we need to change that
     } 
 
-    public String verify(Users user){
-        //Here we are passing unauthenticated username and password to authenticate
-        Authentication authentication=authManager.authenticate(new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword()));
+  
+public String verify(Users user) {
+    // Step 1: Authenticate username and password
+    Authentication authentication = authManager.authenticate(
+        new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword())
+    );
 
-        if(authentication.isAuthenticated())
-          return jwtService.generateToken(user.getUsername());
-        else
-          return "failure";
+    // Step 2: If credentials are valid
+    if (authentication.isAuthenticated()) {
+        // Fetch the actual user from DB
+        Users dbUser = repo.findByUsername(user.getUsername());
+
+        // Step 3: Compare roles
+        if (dbUser != null && dbUser.getRole().equals(user.getRole())) {
+            return jwtService.generateToken(user.getUsername());
+        } else {
+            return "Role mismatch or user not found";
+        }
+    } else {
+        return "Authentication failed";
     }
+}
 
     
 }
